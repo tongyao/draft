@@ -1,0 +1,52 @@
+/**
+
+A draft for webapp description target to search engin.
+
+File format is .json, filename is to be determined.
+
+
+Todo:
+Localization support should be built in.
+
+**/
+
+{
+  "name": "App Name",  //App名称
+  
+  "rating" : "4+", //应用分级 4+ 14+ 18+ 22+
+  
+  "type" : "WebApp", //类型，可选值WebApp, Hybrid App, Native App
+  
+  "version": "0.7.2", //当前版本
+  
+  "description": "A Realtime Mobile WebApp", //App描述
+  
+  "whatsNew": "1.Fix bugs \n2.Add Features", //最新版本更新说明
+  
+  "lastModified" : "1371626604360", //内容最后更新时间
+  
+  "frequency": "daily", //期望抓取更新频率
+  
+  "author": "tongyao@baidu.com", //作者姓名（公司名）
+  
+  "defaultLanguage" : "Simplified Chinese", //默认语言版本
+  
+  "created" : "1371626604360", //应用创建时间
+  
+  "released" : "1371626604360", //当前版本发布上线时间
+  
+  "keywords": [   //应用关键词
+    "Hermès", 
+    "Bottega Veneta"
+  ],
+  
+  "primaryCategory" : 'LifeStyle', //首选分类
+  
+  "secondaryCategory" : 'Fashion', //第二分类，可选
+
+  "supportURL": "http://www.baidu.com", //服务支持地址
+  
+  "marketingURL": "http://www.baidu.com", //市场信息地址
+  
+  "priceTier": "Free" //价格 
+}
