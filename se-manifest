@@ -40,7 +40,7 @@ Localization support should be built in.
     "Bottega Veneta"
   ],
   
-  "primaryCategory" : 'LifeStyle', //首选分类
+  "primaryCategory" : 'Lifestyle', //首选分类
   
   "secondaryCategory" : 'Fashion', //第二分类，可选
 
