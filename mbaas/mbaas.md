@@ -5,7 +5,7 @@ MBAAS JS API
 
 ### Namespace
 
-  baidu.mbaas.<product>
+    baidu.mbaas.[product]
 
 
 ## API List
