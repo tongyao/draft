@@ -9,7 +9,7 @@ MBAAS JS API
 * 各模块独立工作，支持开发者根据自身需要自行选择custom build
 * 考虑到实际用户加载性能，不提供异步loader
 * 所有模块需要统一使用框架提供的网络访问接口，用于未来兼容nodejs等其他平台
-* 所有API不应该包含任何对BOM & DOM对象的访问和操作
+* 所有子API不应该包含任何对BOM & DOM对象的访问和操作
 
 
 ### Namespace
