@@ -3,6 +3,10 @@ MBAAS JS API
 
 ## Overview
 
+### Namespace
+
+  baidu.mbaas.<product>
+
 
 ## API List
 
