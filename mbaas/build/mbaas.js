@@ -1,0 +1,168 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+var fs = require('fs')
+  , os = require('os')
+  , path = require('path')
+  , util = require('util')
+  , mkdirp = require('mkdirp')
+  , exec = require('child_process').exec
+  , spawn = require('child_process').spawn
+  , version = require('../package.json').version
+  , UglifyJS = require('uglify-js')
+  ;
+  
+
+
+/**
+ *  Common Variables
+ */
+var DEV = 'development';
+var PRD = 'production';
+var DEM = '--daemon';
+var DAEMON = false;
+var TIME_INIT = 3 * 1000;
+var TIME_KILL_WAIT = 5 * 1000;
+
+var CUR_DIR = process.cwd();
+var IF_WORKSPACE = fs.existsSync('mbaas') || fs.existsSync('build/mbaas');
+var HOME = fs.existsSync('build/mbaas') ? CUR_DIR : path.join(CUR_DIR, '../');
+var LOGS_DIR = path.join(HOME, 'logs') 
+var TMP_FILE = path.resolve(LOGS_DIR, 'tmp');
+var KILL_CMD_LUX = 'kill -9 `ps -ef|grep node|awk \'{print $2}\'`';
+var KILL_CMD_WIN = 'taskkill /im node.exe /f';
+var MASTER_JSON;
+
+var NOWORKSPACE_ERROR = 'Please go to root directory to start the process.';
+var COMMAND_ERROR = 'The command is error format.';
+var FILEREAD_ERROR = 'Fail to read the file, please check if the application is started legally.';
+var CLOSEAPP_INFO = 'Closing the application......\nPlease wait......';
+
+/**
+ * Usage documentation.
+ */
+var usage = '' + '\n' + '  Usage: mbaas [action] [option]\n' + '\n' + '  Options:\n' + '  build  [path]        build SDK\n';
+
+/**
+ * Parse command arguments.
+ */
+var args = process.argv.slice(2);
+
+(function() {
+  var arg = args.shift();
+  switch(arg) {
+  case undefined:
+  case '--help':
+    legalArgNum(0);
+    abort(usage);
+    break;
+  case '--version':
+    legalArgNum(0);
+    abort(version);
+    break;
+  case 'build':
+    legalArgNum(1);
+    build(args[0]);
+    break;
+  default:
+    abort(COMMAND_ERROR);
+    break;
+  }
+})();
+
+/**
+ * build it.
+ *
+ * @param {String} path
+ */
+function build(ph) {
+    if(!IF_WORKSPACE){
+	   abort(NOWORKSPACE_ERROR);    
+	}
+	
+	var dependencies = path.join(HOME, 'mbaas.js');
+	dependencies = fs.readFileSync(dependencies).toString();
+	
+	var srcSyntax = /<[\s]*script[^>]+src=['"](.+)['"][^>/]*>/gm;
+	var rs = [];
+	dependencies.replace(srcSyntax,function(match, src){
+	    rs.push(src);
+	});
+	
+	var file,
+        fileCnt;
+        
+	rs.forEach(function(item){
+	   file = path.join(HOME, item)
+	   if (!fs.existsSync(item)) {
+	       return;
+	   }; 
+	   
+	   fileCnt += fs.readFileSync(file).toString();
+	});
+	
+	
+    //压缩js代码
+    var ast = UglifyJS.parse(fileCnt); // parse code and get the initial AST
+    var compressor = UglifyJS.Compressor();
+    ast.figure_out_scope();
+    var compressed_ast = ast.transform(compressor);
+    compressed_ast.figure_out_scope();
+    compressed_ast.compute_char_frequency();
+    compressed_ast.mangle_names(); // get a new AST with mangled names
+    
+    var packedAppContent = compressed_ast.print_to_string(); // compressed code here
+	
+	var targetPath = path.join(HOME, 'bin/mbaas-' + version + '.js');
+	
+    fs.writeFileSync(targetPath, packedAppContent);
+    
+    abort('Build Successfully');
+};
+
+
+/**
+ * Exit with the given `str`.
+ *
+ * @param {String} str
+ */
+function abort(str) {
+  console.error(str);
+  process.exit(1);
+};
+
+/**
+ * Check whether the number of arguments is legal.
+ *
+ * @param {Number} argNum
+ */
+function legalArgNum(argNum) {
+  if(args.length != argNum) abort(COMMAND_ERROR);
+};
+
+/**
+ * Mkdir -p.
+ *
+ * @param {String} path
+ * @param {Function} fn
+ */
+function mkdir(path, fn) {
+  mkdirp(path, 0755, function(err){
+    if (err) throw err;
+    console.log('   \033[36mcreate\033[0m : ' + path);
+    fn && fn();
+  });
+}
+
+/**
+ * get current time
+ *
+**/
+
+function time(){
+	var time = new Date();
+	
+	return time.getDate() + '-' + (time.getMonth() - 0 + 1) + '-' + time.getFullYear() + '-' + time.valueOf();
+}
