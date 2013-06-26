@@ -11,6 +11,9 @@ MBAAS JS API
 * 考虑到实际用户加载性能，不提供异步loader
 * 所有模块需要统一使用框架提供的网络访问接口，用于未来兼容nodejs等其他平台
 * 所有子API不应该包含任何对BOM & DOM对象的访问和操作
+* 按较小的功能粒度切分文件，每个product在src目录下拥有独立目录
+* 除public api外，不在window对象上挂载任何全局变量，代码使用闭包包装
+* public api统一遵循namespace，挂接于baidu.mbaas之下
 
 ### Namespace
 
