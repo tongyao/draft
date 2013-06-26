@@ -68,11 +68,11 @@ baidu.mbaas.jsonp = {};
         function encode(str) {
             return encodeURIComponent(str);
         }
-        function jsonp(url, params, callback, callbackName, onerror) {
+        function jsonp(url, params, callback, onerror, callbackName) {
             var query = (url||'').indexOf('?') === -1 ? '?' : '&', key;
     
-            callbackName = (callbackName||config['callbackName']||'baidu_mbaas_jsonp_callback');
-            var uniqueName = callbackName + "_json" + (++counter);
+            callbackName = (callbackName||config['callbackName']||'callback');
+            var uniqueName = 'baidu_mbaas_' + callbackName + "_json" + (++counter);
     
             params = params || {};
             for ( key in params ) {
