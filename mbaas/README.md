@@ -56,6 +56,13 @@ JSONP配置
     }, function(ex){ 
         //something goes wrong. optional
     });
+    
+    //generates: 
+    //http://url.php?paramA=1&paramB=2&callback=baidu_mbaas_callback_json1
+    
+    //server should return
+    //baidu_mbaas_callback_json1({data : 'abcdefg'})
+    
 
 ### Social Login
 
