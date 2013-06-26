@@ -18,20 +18,20 @@ MBAAS JS API
 
 ### 目录说明
 
-bin - 编译产出目录
-build - 编译脚本
-sample - 用于存放API使用Sample
-src - 源代码
-test - 单元测试
-mbaas.js - 依赖关系描述 / Debug用的SDK入口文件
-mbaas.md - 本文档
+* bin - 编译产出目录
+* build - 编译脚本
+* sample - 用于存放API使用Sample
+* src - 源代码
+* test - 单元测试
+* mbaas.js - 依赖关系描述 / Debug用的SDK入口文件
+* mbaas.md - 本文档
 
 ### 开发流程
 
-1 git clone
-1 执行npm install安装所需node_modules(用于编译脚本）
-1 在src目录中开发源代码 / test目录中开发单元测试 / sample中存放示例
-1 在根目录执行build/mbaas build 执行编译
+1. git clone
+1. 执行npm install安装所需node_modules(用于编译脚本）
+1. 在src目录中开发源代码 / test目录中开发单元测试 / sample中存放示例
+1. 在根目录执行build/mbaas build 执行编译
 
 ## API List
 
