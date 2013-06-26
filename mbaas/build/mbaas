@@ -115,7 +115,12 @@ function build(ph) {
     
     var packedAppContent = compressed_ast.print_to_string(); // compressed code here
 	
+	
 	var targetPath = path.join(HOME, 'bin/mbaas-' + version + '.js');
+	
+	if(!fs.existsSync(path.join(HOME, 'bin'))){
+	    fs.mkdirSync(path.join(HOME, 'bin'));
+	};
 	
     fs.writeFileSync(targetPath, packedAppContent);
     
