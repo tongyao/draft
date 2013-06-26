@@ -1,0 +1,28 @@
+{
+  "name": "baidu-mbaas",
+  "version": "1.0.0",
+  "description": "Baidu mbaas JS SDK",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tongyao/draft.git"
+  },
+  "keywords": [
+    "javascript",
+    "mbaas",
+    "webapp"
+  ],
+  "dependencies": {
+    "mkdirp": "0.3.3",
+    "shelljs": "0.0.8",
+    "uglify-js": "2.3.4"
+  },
+  "bin": {
+    "mbaas": "./build/mbaas"
+  },
+  "author": "sumeru team",
+  "license": "MIT"
+}
