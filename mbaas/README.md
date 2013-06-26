@@ -34,6 +34,29 @@ MBAAS JS API
 
 ## API List
 
+### General
+
+#### JSONP
+
+用于短链接请求所有跨域HTTP请求
+
+JSONP配置
+    
+    baidu.mbaas.jsonp.init({
+    
+        error : function(ex){}, //统一的错误处理方法
+    
+        callbackName : 'customCallbackName' //JSONP的回调方法名
+    })
+    
+发起JSONP请求
+    
+    baidu.mbaas.jsonp.get('url.php', {paramA : 1, paramB : 2}, function(data){
+        //do something with data, which is the JSON object you should retrieve from someUrl.php
+    }, function(ex){ 
+        //something goes wrong. optional
+    });
+
 ### Social Login
 
 ### Channel
