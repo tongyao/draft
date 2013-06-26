@@ -24,7 +24,6 @@ MBAAS JS API
 * src - 源代码
 * test - 单元测试
 * mbaas.js - 依赖关系描述 / Debug用的SDK入口文件
-* mbaas.md - 本文档
 
 ### 开发流程
 

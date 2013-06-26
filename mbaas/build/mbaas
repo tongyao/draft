@@ -63,7 +63,7 @@ var args = process.argv.slice(2);
     abort(version);
     break;
   case 'build':
-    legalArgNum(1);
+    legalArgNum(0);
     build(args[0]);
     break;
   default:
