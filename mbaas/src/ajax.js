@@ -195,15 +195,17 @@ baidu.mbaas.ajax = {};
      *
      * @param {string} url 请求的地址
      * @param {Object=} data 请求的数据
-     * @param {boolean=} cache 决定是否允许缓存x
+     * @param {Object=} options 相关配置
      */
-    ajax.get = function (url, data, cache) {
-        var options = {
+    ajax.get = function (url, data, options) {
+        var defaults = {
             method: 'GET',
             url: url,
             data: data,
-            cache: cache || false
+            cache: false
         };
+        options = util.mix(defaults, options);
+        
         return ajax.request(options);
     };
 
@@ -212,16 +214,19 @@ baidu.mbaas.ajax = {};
      *
      * @param {string} url 请求的地址
      * @param {Object=} data 请求的数据
-     * @param {boolean=} cache 决定是否允许缓存
+     * @param {Object=} options 相关配置
      */
-    ajax.getJSON = function (url, data, cache) {
-        var options = {
+    ajax.getJSON = function (url, data, options) {
+        var defaults = {
             method: 'GET',
             url: url,
             data: data,
             dataType: 'json',
             cache: cache || false
         };
+        
+        options = util.mix(defaults, options);
+        
         return ajax.request(options);
     };
 
@@ -232,14 +237,19 @@ baidu.mbaas.ajax = {};
      * @param {string} url 请求的地址
      * @param {Object=} data 请求的数据
      * @param {string=} dataType 指定w响应的数据格式，可为**text**或**json**
+     * @param {Object=} options 相关配置
      */
-    ajax.post = function (url, data, dataType) {
-        var options = {
+    ajax.post = function (url, data, dataType, options) {
+        var defaults = {
             method: 'POST',
             url: url, 
             data: data,
             dataType: dataType || 'json'
         };
+        
+        
+        options = util.mix(defaults, options);
+        
         return ajax.request(options);
     };
     

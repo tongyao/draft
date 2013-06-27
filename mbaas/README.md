@@ -40,6 +40,33 @@ MBAAS JS API
 
 ### General
 
+#### AJAX (CORS)
+
+GET
+	baidu.mbaas.ajax.get(url, data, {
+	
+		callback : function(data){},	//optional
+		onerror : function(xhr, error){} //optional
+	
+	});
+	
+GET JSON
+	baidu.mbaas.ajax.getJSON(url, data, {
+	
+		callback : function(data){},	//optional
+		onerror : function(xhr, error){} //optional
+	
+	});
+	
+POST
+	baidu.mbaas.ajax.post(url, data, 'json', {
+	
+		callback : function(data){},	//optional
+		onerror : function(xhr, error){} //optional
+	
+	});
+
+
 #### JSONP
 
 用于短链接请求所有跨域HTTP请求
