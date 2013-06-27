@@ -27,6 +27,11 @@ baidu.mbaas.social = {};
     weibo.onLoginSuccess = function(status, data){
         if (status == 'success') {
             //local storage to save token
+            //if need any network to work, simply call baidu.mbaas.jsonp or baidu.mbaas.ajax
+            
+            baidu.mbaas.jsonp.get('http://wwww.baidu.com', {}, function(){
+                //done!
+            });
         };
     };
     
