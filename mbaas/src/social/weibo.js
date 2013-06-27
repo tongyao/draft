@@ -14,7 +14,7 @@
 * 
 */
 
-baidu.mbaas.social = {};
+baidu.mbaas.social = baidu.mbaas.social || {};
 
 (function(namespace_){
     
