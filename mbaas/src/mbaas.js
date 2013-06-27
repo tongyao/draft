@@ -21,7 +21,5 @@ baidu.mbaas = {};
 
 
 if (typeof module !== 'undefined' && module.exports) {
-    
-} else {
-    
+    module.exports = baidu;
 }
