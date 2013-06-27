@@ -1,7 +1,7 @@
 /**
  * Do NOT Remove this file.
  * Could use this file as a debug version of sdk
- * also the build script calculates the dependencies based on this file.
+ * also the build script calculates dependencies basing on this file.
  * @author tongyao@baidu.com 
  */
 
