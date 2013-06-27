@@ -6,4 +6,6 @@
  */
 
 document.write('<script src="src/mbaas.js">\x3C/script>');
+document.write('<script src="src/util.js">\x3C/script>');
+document.write('<script src="src/ajax.js">\x3C/script>');
 document.write('<script src="src/jsonp.js">\x3C/script>');
