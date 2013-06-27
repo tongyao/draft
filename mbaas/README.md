@@ -43,6 +43,7 @@ MBAAS JS API
 #### AJAX (CORS)
 
 GET
+
 	baidu.mbaas.ajax.get(url, data, {
 	
 		callback : function(data){},	//optional
@@ -51,6 +52,7 @@ GET
 	});
 	
 GET JSON
+	
 	baidu.mbaas.ajax.getJSON(url, data, {
 	
 		callback : function(data){},	//optional
@@ -59,6 +61,7 @@ GET JSON
 	});
 	
 POST
+	
 	baidu.mbaas.ajax.post(url, data, 'json', {
 	
 		callback : function(data){},	//optional
