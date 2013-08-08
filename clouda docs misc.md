@@ -99,6 +99,22 @@ app.manifest文件的格式与w3c规定的manifest文件格式一致，见：[ht
 	CACHE:
 	style/default.css
 	
-##view和router的一些配置项开关
+## router的外部处理器
 
+如果您使用backbone等第三方框架，或是存在已有代码根据URL的变化执行一些逻辑，那么这些需求，都可以通过注册一个router的外部处理器使其保持正常工作。
 
+一个外部处理器的写法：
+	var processor = function(path){
+		//do something
+		return true;
+	}
+
+添加一个外部处理器：
+	sumeru.router.externalProcessor.add(processor);
+	
+执行顺序：
+URL匹配将按如下顺序执行
+
+ 1. 检查所有通过sumeru.router.add添加的规则，如果有，执行对应controller，不再向下寻找；如果没有匹配，进入下一步
+ 2. 读取所有通过sumeru.router.externalProcessor.add添加的外部处理器，按照添加顺序逐个传入当前path，如果遇到返回true，则终止查找；如果遇到返回false，则继续执行下一个外部处理器。
+ 3. 若通过以上两步执行后仍然没有匹配项，则执行默认Controller。如未设置默认Controller，抛出异常。
