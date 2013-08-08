@@ -6,6 +6,6 @@ foreach
 用于快速遍历一个对象或数组
 
 用法示例：
-  <p id="test-foreach-caseB">  
+	<p id="test-foreach-caseB">  
 		{{#foreach customObj}}{{key}} : {{value}}{{/foreach}}
 	</p>
