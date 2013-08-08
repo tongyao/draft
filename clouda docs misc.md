@@ -99,4 +99,6 @@ app.manifest文件的格式与w3c规定的manifest文件格式一致，见：[ht
 	CACHE:
 	style/default.css
 	
-	
+##view和router的一些配置项开关
+
+
