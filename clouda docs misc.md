@@ -119,7 +119,17 @@ URL匹配将按如下顺序执行
  2. 读取所有通过sumeru.router.externalProcessor.add添加的外部处理器，按照添加顺序逐个传入当前path，如果遇到返回true，则终止查找；如果遇到返回false，则继续执行下一个外部处理器。
  3. 若通过以上两步执行后仍然没有匹配项，则执行默认Controller。如未设置默认Controller，抛出异常。
 
+添加一个backbone的外部处理器：
+	sumeru.router.externalProcessor.add(Backbone.Router.extend());
 
 ##view模板的路径定义
 
-如果sumeru.config.view
+如果你的view模板没有放在app目录/view/中，可以通过如下命令修改视图的目录位置：
+
+	sumeru.config.view.set('path', 'path/to/');
+
+则Clouda会在如下目录中加载视图：
+
+	app目录/path/to/view/
+
+注意，即使是修改viewpath的情况下，在最内一侧仍然需要有一层view文件夹，如上面路径的最后部分
