@@ -8,5 +8,5 @@ foreach
 用法示例：
 
     <p id="test-foreach-caseB">  
-    	    {{#foreach customObj}}{{key}} : {{value}}{{/foreach}}
-        </p>
+        {{#foreach customObj}}{{key}} : {{value}}{{/foreach}}
+    </p>
