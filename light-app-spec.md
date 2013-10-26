@@ -330,6 +330,54 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***
 
 
+
+
+### Key Value Storage
+	clouda.device.localStorage
+
+#### API
+
+***	
+
+> HTML5 webstorage http://dev.w3.org/html5/webstorage/
+
+	interface Storage {
+  		readonly attribute unsigned long length;
+  		DOMString? key(unsigned long index);
+  		getter DOMString? getItem(DOMString key);
+  		setter creator void setItem(DOMString key, DOMString value);
+  		deleter void removeItem(DOMString key);
+  		void clear();
+	};
+
+
+##### 保存一个Key Value配对（实际为异步实现）
+	
+	clouda.device.localStorage.setItem(key, value)
+	
+##### 读取一个Key Value配对
+	clouda.device.localStorage.getItem(key, function(value){});
+	
+##### 读取所有Key的数量
+	clouda.device.localStorage.getLength(function(length){});
+	
+##### 按Key的Offset读取Value
+	clouda.device.localStorage.getByKey(offset, function(value){});
+	
+##### 删除所有数据
+	clouda.device.localStorage.clean();
+
+***
+#### 实现说明
+* 需要考虑如何禁止开发者死循环要求用户授权接收Push的场景，但允许开发者在用户不授权Push时自己用界面提示无法提供服务。
+
+#### TODO
+* 这套API可以同步化，但可能涉及内存和LocalStorage的自动同步，存在丢失数据的风险
+
+***
+
+
+
 ## Clouda-UI
 	clouda.ui
 
@@ -339,13 +387,29 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***
 
 
-### 启动语音识别 (voice to text)
+## MBAAS 
+	clouda.mbaas
+
+
+### 语音识别 / VTT
+	clouda.mbaas.vtt
+
+#### API
+
+***
+##### 语音识别的状态码
+	clouda.mbaas.VTT_STATUS.NETWORK_FAILURE //网络失败
+	clouda.mbaas.VTT_STATUS.FAIL //识别失败
+	clouda.mbaas.VTT_STATUS.UNKNOWN_ERROR //未知系统错误
+	
+
+##### 启动语音识别 (voice to text)
   
-    clouda.vtt.startCapture(options);
+    clouda.mbaas.vtt.startCapture(options);
   
     options : {
       //识别成功后的回调
-      onsuccess : function(resultString){
+      onsuccess : function(result){
         
       },
       
@@ -355,10 +419,64 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
       
       //识别或上传失败的回调
       onfail : function(status){
-        //statusCode  0x01:网络失败 0x02:识别失败
+        //状态码
       }
     }
+
+##### 手动终止已经启动的语音识别
   
+    clouda.mbaas.vtt.terminateCapture(options);
+
+* options - 同startCapture时的options
+***
+#### 实现说明
+* 同样存在模拟阻塞的需求，详细说明见设备能力 - Camera中的实现说明描述
+
+***   
+
+
+### 二维码识别 / QR Code Scan
+	clouda.mbaas.qr
+
+#### API
+
+***
+##### 二维码扫描的状态码
+	clouda.mbaas.QR_STATUS.NETWORK_FAILURE //网络失败
+	clouda.mbaas.QR_STATUS.FAIL //识别失败
+	clouda.mbaas.QR_STATUS.UNKNOWN_ERROR //未知系统错误
+
+由于二维码扫描过程中，只有发现二维码才会继续下一步，因此不存在未找到二维码图像的错误码	
+
+##### 启动二维码扫描与识别
+  
+    clouda.mbaas.qr.startCapture(options);
+  
+    options : {
+      //识别成功后的回调
+      onsuccess : function(result){
+        
+      },
+      
+      //用户取消了操作
+      oncancel : function(){
+      },
+      
+      //识别或上传失败的回调
+      onfail : function(status){}
+    }
+
+##### 手动终止已经启动的二维码扫描
+  
+    clouda.mbaas.qr.terminateCapture(options);
+
+* options - 同startCapture时的options
+***
+#### 实现说明
+* 同样存在模拟阻塞的需求，详细说明见设备能力 - Camera中的实现说明描述
+
+***   
+
 
 ### 启动照相OCR 
   
