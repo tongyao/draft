@@ -404,11 +404,9 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
   		}
   * onsuccess
   		
-  		//解绑成功
-  		function(){}
+  		 function(data){}
   * onfail
    
-         //解绑失败
       	 function(){}
 
 ##### 移除一个文件
@@ -718,3 +716,153 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 
 ***   
 
+
+
+
+### Payment / 支付
+	clouda.mbaas.payment
+
+#### API
+
+***	
+
+##### 创建一个交易
+  
+    clouda.mbaas.payment.createTransaction(options);
+  
+   * options : 
+   		
+   		{
+      
+	      order_id : 201308219922,
+	      
+	      currency : 'CNY',
+	      
+	      description : '商品描述',
+	      
+	      amount : 12.70,
+	    
+	      //支付成功后的回调
+	      onsuccess : function(order_id, status){
+	        
+	      },
+	      
+	      //用户取消操作
+	      oncancel : function(){
+	      }
+	    }
+
+##### 验证一个支付状态
+
+待定
+
+***
+#### TODO
+* 如何保证支付结果在仅有客户端的情况下不被篡改
+
+***   
+
+
+
+### Cloud KV Storage / 云端KV存储
+	clouda.mbaas.kvstorage
+
+#### API
+
+***	
+
+##### 保存一个Key Value配对
+	
+	clouda.mbaas.kvstorage.setItem(key, value)
+	
+##### 读取一个Key Value配对
+	clouda.mbaas.kvstorage.getItem(key, function(value){});
+	
+##### 读取所有Key的数量
+	clouda.mbaas.kvstorage.getLength(function(length){});
+	
+##### 按Key的Offset读取Value
+	clouda.mbaas.kvstorage.getByKey(offset, function(value){});
+	
+##### 删除所有数据
+	clouda.mbaas.kvstorage.clean();
+
+***
+#### TODO
+
+***   
+
+
+### Cloud File Storage / 云端文件存储
+	clouda.mbaas.filestorage
+
+#### API
+
+***	
+
+##### 上传文件
+  
+    clouda.mbaas.filestorage.upload(file_url, options);
+  
+* file_url 之前获得的127.0.0.1的文件URL地址
+* options
+      	
+  * onsuccess
+  		function(file_token){}
+  * onfail
+      	 function(){}
+      	 
+##### 下载文件
+  
+    clouda.mbaas.filestorage.download(file_url, options);
+  
+* options
+      	
+  * onsuccess
+  		function(file_url){
+  			//file_url是下载后本地的url
+  		}
+  * onfail
+      	 function(){}
+
+##### 移除一个文件
+  
+    clouda.mbaas.filestorage.delete(file_token);
+    
+仅能移除属于其appkey下的文件
+
+
+##### 删除所有文件
+  
+   clouda.mbaas.filestorage.empty();
+    
+仅能移除属于其appkey下的文件
+
+
+##### 文件数量
+  
+    clouda.mbaas.filestorage.getCount(function(total){});
+    
+##### 获取某一个文件信息
+    
+    //通过token
+    clouda.mbaas.filestorage.getInfo(token, function(info){})
+  
+    //通过index
+    clouda.mbaas.filestorage.getInfo(index, function(info){
+    	/*
+    	info : {
+    		url : url,
+  			mime_type : 'image/png',
+  			extension : '.jpg',
+  			width : 300, // only for image
+  			height : 300 // only for image
+  		}
+       	*/
+    });
+
+
+***
+#### TODO
+
+***   
