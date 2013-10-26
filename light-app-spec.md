@@ -450,6 +450,67 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***   
 
 
+### Web Socket
+	clouda.device.websocket
+
+#### API
+
+***	
+
+> HTML5 websocket http://dev.w3.org/html5/websockets/
+
+	interface WebSocket : EventTarget {
+	  readonly attribute DOMString url;
+	
+	  // ready state
+	  const unsigned short CONNECTING = 0;
+	  const unsigned short OPEN = 1;
+	  const unsigned short CLOSING = 2;
+	  const unsigned short CLOSED = 3;
+	  readonly attribute unsigned short readyState;
+	  readonly attribute unsigned long bufferedAmount;
+	
+	  // networking
+      attribute EventHandler onopen;
+      attribute EventHandler onerror;
+      attribute EventHandler onclose;
+	  readonly attribute DOMString extensions;
+	  readonly attribute DOMString protocol;
+	  void close([Clamp] optional unsigned short code, optional DOMString reason);
+	
+	  // messaging
+      attribute EventHandler onmessage;
+      attribute BinaryType binaryType;
+	  void send(DOMString data);
+	  void send(Blob data);
+	  void send(ArrayBuffer data);
+	  void send(ArrayBufferView data);
+	};
+
+
+##### 新建一个WS通道
+	
+	var handler = clouda.device.websocket.create('ws://xxx');
+@return handler	
+	
+##### 连接情况的事件
+	handler.onopen = function(){};
+	handler.onerror = function(){};
+	handler.onclose = function(){};
+	
+##### 接受消息
+	handler.onmessage = function(msg){};
+	
+##### 发送消息
+	handler.send(msg);
+	
+##### 关闭连接
+	handler.close();
+
+***
+
+
+
 
 ## Clouda-UI
 	clouda.ui
@@ -508,6 +569,68 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***   
 
 
+### 二维码生成与识别 / QR Code Scan
+	clouda.mbaas.qr
+
+#### API
+
+***
+##### 二维码扫描的状态码
+	clouda.mbaas.QR_STATUS.NETWORK_FAILURE //网络失败
+	clouda.mbaas.QR_STATUS.FAIL //识别失败
+	clouda.mbaas.QR_STATUS.UNKNOWN_ERROR //未知系统错误
+
+由于二维码扫描过程中，只有发现二维码才会继续下一步，因此不存在未找到二维码图像的错误码	
+
+##### 启动二维码扫描与识别
+  
+    clouda.mbaas.qr.startCapture(options);
+  
+    options : {
+      //识别成功后的回调
+      onsuccess : function(result){
+        
+      },
+      
+      //用户取消了操作
+      oncancel : function(){
+      },
+      
+      //识别或上传失败的回调
+      onfail : function(status){}
+    }
+
+##### 手动终止已经启动的二维码扫描
+  
+    clouda.mbaas.qr.terminateCapture(options);
+
+* options - 同startCapture时的options
+
+
+##### 生成二维码
+  
+    clouda.mbaas.qr.generate(content, width, height, options);
+    
+  * options
+      	
+	  * onsuccess
+  		
+  			//生成成功
+  			function(file_url){}
+	  * onfail
+   
+         	//生成失败
+      	 	function(){}
+
+
+    
+***
+#### 实现说明
+* 同样存在模拟阻塞的需求，详细说明见设备能力 - Camera中的实现说明描述
+
+***   
+
+
 ### 二维码识别 / QR Code Scan
 	clouda.mbaas.qr
 
@@ -551,36 +674,47 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***   
 
 
-### 启动照相OCR 
+
+### Social Login / 社会化登录
+	clouda.mbaas.oauth
+
+#### API
+
+***	
+
+##### 使用社会化登录
   
-    clouda.ocr.startCapture(options);
-    
+    clouda.mbaas.oauth.login(options);
+  
     options : {
-      //识别成功后的回调
-      onsuccess : function(resultString){
+      
+      platform : 'baidu', //'sinaweibo','qqweibo','renren','kaixin'
+    
+      //登录成功后的回调
+      onsuccess : function(platform, token){
         
       },
       
-      //用户取消了操作
+      //用户取消操作
       oncancel : function(){
-      },
-      
-      //识别或上传失败的回调
-      onfail : function(status){
-        //statusCode  0x01:网络失败 0x02:识别失败
       }
-    }  
+    }
+
+***
+#### 实现说明
+* 屏蔽所有Server端, REST API, Callback等oAuth逻辑，以异步方式直接提供登录事件
+
+***   
 
 
-### 启动文本转语音（Text To Speech）
-  
-    clouda.tts.say(text, options);
-    
-    options : {
-      //语音播放完成的回调
-      onfinish : function(){
-        
-      }
-    }  
+### Social Share / 社会化分享
+	clouda.mbaas.share
 
+#### API
+
+***	
+
+此类含UI组件直接接入Clouda-UI中
+
+***   
 
