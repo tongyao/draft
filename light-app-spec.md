@@ -8,14 +8,18 @@
 
 ## version 1.0
 
-	2013.10.27
+	2013.10.22
 	@todo defer & promise
 
 ## 命名空间
     clouda
 
-## APP信息注册
+## APP信息注册 
 	clouda.lightapp(apikey)
+	
+	必须首先调用以完成APP注册，方可正常使用轻应用API
+
+轻应用会自行检测，若未收到apikey注册，则阻止所有API调用
 
 ## 设备能力
 	clouda.device
@@ -330,8 +334,6 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 ***
 
 
-
-
 ### Key Value Storage
 	clouda.device.localStorage
 
@@ -375,6 +377,77 @@ Geolocation属于监听类，当地点发生改变时随时触发开发者指定
 * 这套API可以同步化，但可能涉及内存和LocalStorage的自动同步，存在丢失数据的风险
 
 ***
+
+
+
+### 文件管理 / FS
+	clouda.device.fs
+
+并不提供实际FS的读写，只是可以管理与node.js的交互中所产生的文件（如拍照的照片，相册中选择的图片）
+
+#### API
+
+***
+##### 文件上传
+  
+    clouda.device.fs.postFile(file_url, target, options);
+  
+* file_url 之前获得的127.0.0.1的文件URL地址
+* target 要POST到的目标，如http://some.host/foo
+* options
+      	
+  * params POST的同时携带的其他信息
+  		
+  		{
+  		key : value,
+  		...
+  		}
+  * onsuccess
+  		
+  		//解绑成功
+  		function(){}
+  * onfail
+   
+         //解绑失败
+      	 function(){}
+
+##### 移除一个文件
+  
+    clouda.device.fs.remove(file_url);
+    
+仅能移除属于其appkey下的文件
+
+
+##### 删除所有文件
+  
+    clouda.device.fs.empty();
+    
+仅能移除属于其appkey下的文件
+
+
+##### 文件数量
+  
+    clouda.device.fs.getCount(function(total){});
+    
+##### 获取某一个文件信息
+    
+    //通过本地url
+    clouda.device.fs.getInfo(url, function(info){})
+  
+    //通过index
+    clouda.device.fs.getInfo(index, function(info){
+    	/*
+    	info : {
+    		url : url,
+  			mime_type : 'image/png',
+  			extension : '.jpg',
+  			width : 300, // only for image
+  			height : 300 // only for image
+  		}
+       	*/
+    });
+
+***   
 
 
 
